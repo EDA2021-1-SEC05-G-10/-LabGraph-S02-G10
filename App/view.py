@@ -27,6 +27,7 @@
 
 import sys
 import config
+import time
 import threading
 from App import controller
 from DISClib.ADT import stack
@@ -133,17 +134,24 @@ def thread_cycle():
             optionThree(cont)
 
         elif int(inputs[0]) == 4:
+            t1 = getTime()
             msg = "Estación Base: BusStopCode-ServiceNo (Ej: 75009-10): "
             initialStation = input(msg)
             optionFour(cont, initialStation)
+            t2 = getTime()
+            print("Tiempo de ejecución: ", round(t2-t1, 2))
 
         elif int(inputs[0]) == 5:
             destStation = input("Estación destino (Ej: 15151-10): ")
             optionFive(cont, destStation)
 
         elif int(inputs[0]) == 6:
+            t1 = getTime()
             destStation = input("Estación destino (Ej: 15151-10): ")
             optionSix(cont, destStation)
+            t2 = getTime()
+            print("Tiempo de ejecución: ", round(t2-t1, 2))
+
 
         elif int(inputs[0]) == 7:
             optionSeven(cont)
@@ -158,3 +166,9 @@ if __name__ == "__main__":
     sys.setrecursionlimit(2 ** 20)
     thread = threading.Thread(target=thread_cycle)
     thread.start()
+
+def getTime():
+    """
+    devuelve el instante tiempo de procesamiento en milisegundos
+    """
+    return float(time.perf_counter()*1000)
